@@ -59,3 +59,18 @@ async function fetchProduct(id) {
     return null;
   }
 }
+// Fetch all product IDs to generate static paths
+export async function generateStaticParams() {
+  try {
+    const response = await axios.get('https://fakestoreapi.com/products');
+    const products = response.data;
+
+    // Generate a list of paths based on product IDs
+    return products.map(product => ({
+      id: product.id.toString(),
+    }));
+  } catch (error) {
+    console.error("Error fetching product IDs:", error);
+    return [];
+  }
+}
